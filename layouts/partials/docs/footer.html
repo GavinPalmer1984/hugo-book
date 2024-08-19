@@ -25,3 +25,40 @@
 </div>
 
 <script src="js/main.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var closeButton = document.getElementById("close-banner");
+    var banner = document.getElementById("warning-banner");
+  
+    // Function to check if the banner should be shown
+    function shouldShowBanner() {
+      var lastHideTime = localStorage.getItem("bannerLastHideTime");
+      if (!lastHideTime) {
+        return true; // Never been shown
+      }
+      
+      var oneHour = 60 * 60 * 1000; // One hour in milliseconds
+      var now = new Date().getTime();
+  
+      if (now - lastHideTime >= oneHour) {
+        return true; // One hour has passed since last hide
+      }
+      
+      return false;
+    }
+  
+    // Show or hide the banner based on the above logic
+    if (shouldShowBanner()) {
+      banner.style.display = "block";
+    } else {
+      banner.style.display = "none";
+    }
+  
+    // Handle the close button click
+    closeButton.addEventListener("click", function() {
+      banner.style.display = "none";
+      localStorage.setItem("bannerLastHideTime", new Date().getTime());
+    });
+  });
+  
+</script>
